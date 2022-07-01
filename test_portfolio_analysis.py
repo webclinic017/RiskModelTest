@@ -2,7 +2,7 @@ import json
 import git
 import subprocess
 from rework_backtrader.utils.directory_controller import remove_if_existed
-from config import FACTOR_RETURN, STOCK_FACTOR_FOLDER, DATA_FOLDER
+from config import FACTOR_RETURN, STOCK_FACTOR_FOLDER, DATA_FOLDER, MKT_CHECK
 from utility import all_stock_list, industry_list, combine_factor_list, date_processing
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,12 +17,15 @@ def analysis(input_file, book_size):
     INPUT_ALPHA_WEIGHT = input_file
     # factor return
     # INPUT_STOCK_FACTOR_FOLDER = input_file
-    all_factor_list = combine_factor_list + industry_list
+    if MKT_CHECK:
+        all_factor_list = combine_factor_list + industry_list + ['index']
+    else:
+        all_factor_list = combine_factor_list + industry_list
     factor_return_df = pd.read_csv(INPUT_FACTOR_RETURN, index_col=0, parse_dates=[0])
     base_index = factor_return_df.index
     # weight alpha
     weight_alpha = pd.read_csv(INPUT_ALPHA_WEIGHT, index_col=0, parse_dates=[0])
-    # weight_alpha = weight_alpha.shift(1).dropna(how='all')
+    weight_alpha = weight_alpha.shift(1).dropna(how='all')
     weight_alpha = weight_alpha.merge(pd.DataFrame(index=base_index),
                                         how='right', left_index=True, right_index=True)
     weight_alpha = weight_alpha.fillna(method='ffill').fillna(0)
@@ -67,12 +70,16 @@ def analysis(input_file, book_size):
     decompose_df[combine_factor_list + industry_list + ['residual']].cumsum().plot()
     decompose_df[combine_factor_list].cumsum().plot()
     decompose_df[industry_list + ['residual']].cumsum().plot()
-    decompose_df[['beta', 'leverage', 'profitability', 'size', 'liquidity', 'value', 'volatility', 'momentum',
-                  'growth', 'earning_yield', 'ST_reversal', 'LT_reversal']].cumsum().plot()
+    if MKT_CHECK:
+        decompose_df[['beta', 'leverage', 'profitability', 'size', 'liquidity', 'value', 'volatility', 'momentum',
+                  'growth', 'earning_yield', 'ST_reversal', 'LT_reversal', 'index']].cumsum().plot()
+    else:
+        decompose_df[['beta', 'leverage', 'profitability', 'size', 'liquidity', 'value', 'volatility', 'momentum',
+                      'growth', 'earning_yield', 'ST_reversal', 'LT_reversal']].cumsum().plot()
     plt.show()
     return decompose_df.cumsum().reset_index().to_dict('records')
 
 
 if __name__ == '__main__':
-    app = analysis('/home/vu/PycharmProjects/FDMT_PV/liquid_alpha_test.csv', 1)
+    app = analysis('/home/vu/Downloads/pos_daily_after_optimize_mosek.csv', 1)
     print(app)
