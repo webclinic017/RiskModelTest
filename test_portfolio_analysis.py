@@ -74,5 +74,5 @@ def analysis(input_file, book_size):
 
 
 if __name__ == '__main__':
-    app = analysis('/home/vu/Downloads/neutral_der_bank.csv', 1)
+    app = analysis('/home/vu/PycharmProjects/FDMT_PV/liquid_alpha_test.csv', 1)
     print(app)

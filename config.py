@@ -3,8 +3,8 @@ from rework_backtrader.utils.directory_controller import create_if_not_existed
 
 DATA_FOLDER = '/data'
 # default mkt = F and industry = T
-MKT_CHECK = False
-INDUSTRY_NORM_CHECK = False
+MKT_CHECK = True
+INDUSTRY_NORM_CHECK = True
 
 if INDUSTRY_NORM_CHECK and MKT_CHECK:
     DATA_PARENT_FOLDER = f"{os.getenv('DATA_PARENT_FOLDER', os.getcwd())}"

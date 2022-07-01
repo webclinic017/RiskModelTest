@@ -159,9 +159,12 @@ if INDUSTRY_NORM_CHECK:
 
     final_df = {}
     for date in index_df.index:
-        final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list,
-                                      index=all_stock_list)
-
+        if MKT_CHECK:
+            final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list + ['index'],
+                                          index=all_stock_list)
+        else:
+            final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list,
+                                          index=all_stock_list)
     new_factor_list = ['pctchange'] + combine_factor_list
 
     for date in final_df.keys():
@@ -300,8 +303,12 @@ else:
 
     final_df = {}
     for date in index_df.index:
-        final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list,
-                                      index=all_stock_list)
+        if MKT_CHECK:
+            final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list + ['index'],
+                                          index=all_stock_list)
+        else:
+            final_df[date] = pd.DataFrame(columns=['pctchange'] + combine_factor_list + industry_list,
+                                          index=all_stock_list)
 
     new_factor_list = ['pctchange'] + combine_factor_list
 

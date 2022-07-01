@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from utility import combine_factor_list
 import numpy as np
 from utility import industry_list
-INPUT_FACTOR_RETURN = '/home/vu/PycharmProjects/RiskModelTest/RiskBarraModel/factor_return_df.csv'
+INPUT_FACTOR_RETURN = '/home/vu/PycharmProjects/RiskModelTest/RiskBarraModel_full_universe_and_no_mkt/factor_return_df.csv'
 import seaborn as sns
 
 factor_return_df = pd.read_csv(INPUT_FACTOR_RETURN, index_col=0)
