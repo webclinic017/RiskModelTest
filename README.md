@@ -12,9 +12,13 @@ Containing:
 - function: calculate_variance and calculate_inverse_variance (for cross_sectional)
 - date_processing: quickly process datetime format
 
+config.py:
+- 2 options: MKT_CHECK and INDUSTRY_NORM_CHECK (default first is False, second is True)
+
 ### II/ Process:
 Please run the following files in consecutive order:
 1. data_processing.py:
+- please adjust option in the config file before running
 - input: folders of daily, sts price and FDMT of all stocks in the universe
 Note: the data would be automatically processed with the Factor class from the factor_process.py
 - output: a folder containing the FACTOR LOADING MATRIX of each DAY (already normalized by industry)
